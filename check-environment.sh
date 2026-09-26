@@ -98,6 +98,14 @@ else
     ((WARNINGS++))
 fi
 
+echo -n "[CHECK] OpenCode Execution Monitor (check-opencode-status.py) ... "
+if [ -f "$(dirname "$0")/check-opencode-status.py" ] || command -v check-opencode-status.py &>/dev/null; then
+    echo -e "${GREEN}OK${NC}"
+else
+    echo -e "${YELLOW}WARN${NC} (check-opencode-status.py missing)"
+    ((WARNINGS++))
+fi
+
 echo -n "[CHECK] Hermes Agent CLI ... "
 if command -v hermes &>/dev/null; then
     echo -e "${GREEN}OK${NC} ($(hermes --version 2>/dev/null || echo 'Installed'))"

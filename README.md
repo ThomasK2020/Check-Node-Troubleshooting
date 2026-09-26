@@ -14,8 +14,9 @@ Toolkit centralisé d'audit, d'auto-réparation (self-healing) et de consignatio
 
 | Fichier / Script | Rôle & Description |
 |---|---|
+| `check-opencode-status.py` | Script autonome de contrôle et de visualisation du statut d'exécution d'OpenCode (processus actifs initiés par Hermes, sessions SQLite `opencode.db`, logs `opencode.log`, mode `--watch`). |
 | `check-environment.sh` | Script d'audit rapide de l'environnement hôte (Python, Git, Docker, Lemonade/vLLM, Qwen Coder, OpenCode, Hermes). |
-| `node-agent.sh` | Agent nœud polyvalent : audit JSON (`--status`), auto-réparation (`--fix`), enregistrement d'erreur (`--log-error`). |
+| `node-agent.sh` | Agent nœud polyvalent : audit JSON (`--status`), auto-réparation (`--fix`), contrôle OpenCode (`--opencode`), enregistrement d'erreur (`--log-error`). |
 | `Node-Troubleshooting-error.md` | Fichier tampon centralisé recevant les rapports d'erreurs poussés par les nœuds distants. |
 | `Troubleshooting-errors.md` | Guide de diagnostic et matrice des commandes CLI pour résoudre les pannes courantes. |
 
@@ -36,7 +37,12 @@ chmod +x *.sh
 # 2. Lancer l'auto-réparation si des avertissements sont détectés
 ./node-agent.sh --fix
 
-# 3. Transmettre un rapport d'erreur vers GitHub
+# 3. Contrôler et visualiser l'exécution d'une tâche OpenCode lancée par Hermes
+./check-opencode-status.py
+# Ou en mode surveillance continue :
+./check-opencode-status.py --watch
+
+# 4. Transmettre un rapport d'erreur vers GitHub
 ./node-agent.sh --log-error "Description ou log du problème" --push
 ```
 

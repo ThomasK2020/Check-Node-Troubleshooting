@@ -164,8 +164,19 @@ case "${1:-status}" in
             sleep 30
         done
         ;;
+    --opencode|--opencode-status|opencode)
+        shift
+        if [ -f "$(dirname "$0")/check-opencode-status.py" ]; then
+            python3 "$(dirname "$0")/check-opencode-status.py" "$@"
+        elif command -v check-opencode-status.py &>/dev/null; then
+            check-opencode-status.py "$@"
+        else
+            echo "[ERROR] check-opencode-status.py non trouvé."
+            exit 1
+        fi
+        ;;
     *)
-        echo "Usage: $0 [--status | --fix | --log-error \"message\" [--push] | --daemon]"
+        echo "Usage: $0 [--status | --fix | --opencode [--watch] | --log-error \"message\" [--push] | --daemon]"
         exit 1
         ;;
 esac
